@@ -1,7 +1,9 @@
+import css from "./css/main.css";
+
 import * as d3 from 'd3';
 import { json } from 'd3-fetch'
 
-
+import Carousel from './objets/Carrousel';
 import { sql } from './lib/sql'
 
 // set the dimensions and margins of the graph
@@ -40,6 +42,8 @@ let svgGraphe = d3.select(".stats")
     .attr("transform", `translate(${margin.left},${margin.top}`)
 
 
+
+
 Promise.all([
     json('../data-2017.json'),
     json('../data-2018.json'),
@@ -52,6 +56,46 @@ Promise.all([
     .then(([data_2017, data_2018, data_2019, data_2020, data_2021, data_events]) =>
     {
 
+        
+
+        let car = new Carousel(document.querySelector('#carousel1'),
+        {
+            slidesToScroll: 1,
+            slidesVisible: 1
+        });
+
+        let container = d3.select('.carousel__item')
+
+        container.selectAll('text')
+            .data(data_2017)
+            .enter()
+            //créer un bloque blanc par musique qui englobe tout
+            .append('div')
+            .attr('class', 'item')
+            //créer une div qui contient le nom de la chanson
+            .append('div')
+            .attr('class', 'name')
+            .text(d=> d.name)
+            //créer une div qui contient l'(es) artiste(s)
+            .append('div')
+            .attr('class', 'artist')
+            .text(d=> d.artists.map(a => ` ${a.name}`))
+            //créer le tableau avec les stats de la musique en question
+            .append('div')
+            .attr('class', 'svg')
+            .append('svg')
+            .attr('class', 'stats')
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            //créer rect
+            .append('rect')
+            .attr("x", function(d) { return x(d.name); })
+            .attr("y", function(d) { return y(d.danceability); })
+            .attr("height", function(d) { return height - y(d.danceability); })
+            .attr("fill", "#69b3a2")
+
+
+/*
         titre.selectAll('text')
             .data(data_2017, d => d)
             .join(
