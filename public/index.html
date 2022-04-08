@@ -6,31 +6,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>History with Spotify</title>
     <script src="../src/index.js" async></script>
+    <link rel="stylesheet" href="../src/css/main.css">
 </head>
 <body>
 
     <!----INTRO---->
     <section id="intro">
-        <h1>Qu'est-ce qu'on écoutait quand...</h1>
+        <h1 class="title">Qu'est-ce qu'on écoutait quand...</h1>
         
         
     </section>
 
     <!----CORPS---->
     <section id="spotifyAndEvents">
-        <div class="container">
-            <div class="titres">
-                <p>On écoutait</p></div>
-            <div class="events"></div>
-            <div class="stats"></div>
+        <p class="textBack">On écoutait</p>
+
+        <div id="carousel1">
+
+            <div class="item">
+                <div class="name"></div>
+                <div class="titres"></div>
+                <div class="stats"></div>
+            </div>
+
         </div>
+
+        <div class="events textBack"></div>
         
     </section>
     
     <!----FIN---->
-    <section id="end">
-        <h1>Et pour la suite...</h1>
-        <p>
+    <section id="end" class="title">
+        <h1 class="title">Et pour la suite...</h1>
+        <p class = "textBack">
             l'avenir nous le dira.
         </p>
     </section>
