@@ -1,46 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>History with Spotify</title>
-    <script src="../src/index.js" async></script>
-    <link rel="stylesheet" href="../src/css/main.css">
-</head>
-<body>
-
-    <!----INTRO---->
-    <section id="intro">
-        <h1 class="title">Qu'est-ce qu'on écoutait quand...</h1>
-        
-        
-    </section>
-
-    <!----CORPS---->
-    <section id="spotifyAndEvents">
-        <p class="textBack">On écoutait</p>
-
-        <div id="carousel1">
-
-            <div class="item">
-                <div class="name"></div>
-                <div class="titres"></div>
-                <div class="stats"></div>
-            </div>
-
-        </div>
-
-        <div class="events textBack"></div>
-        
-    </section>
     
-    <!----FIN---->
-    <section id="end" class="title">
-        <h1 class="title">Et pour la suite...</h1>
-        <p class = "textBack">
-            l'avenir nous le dira.
-        </p>
-    </section>
+    <link rel="stylesheet" type="text/css" href="../src/css/main.css">
+</head>
+
+<body>
+    <main>
+
+        <!----INTRO---->
+        <section id="intro">
+            <h1 class="title">Qu'est-ce qu'on écoutait quand...</h1>
+            <img src="/images/time-travel.svg" alt="time-travel" height="400px">
+        </section>
+
+
+        <!----CORPS---->
+
+        <section id="spotifyAndEvents" class="scrolly">
+
+            <article>
+            </article>
+
+
+
+        </section>
+
+
+        <!----FIN---->
+        <section id="end" class="title">
+            <h1 class="title">Et pour la suite...</h1>
+            <p class="textBack">
+                l'avenir nous le dira.
+            </p>
+        </section>
+
+    </main>
+    <script src="https://unpkg.com/intersection-observer@0.5.1/intersection-observer.js"></script>
+    <script src="https://unpkg.com/scrollama"></script>
 </body>
+
 </html>
