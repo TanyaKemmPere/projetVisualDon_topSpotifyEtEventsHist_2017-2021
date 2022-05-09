@@ -61,3 +61,98 @@ body
     background-color: #13F2F2;
 }
 
+.circle
+{
+    background: #000000;
+    box-shadow: 0px 0px 20px #13F2F2;
+}
+
+.album
+{
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    left: 25px;
+    top: 80px;
+}
+
+.songName
+{
+    position: relative;
+    width: 392px;
+    height: 63px;
+    left: 364px;
+    top: 437px;
+    position: absolute;
+    width: 392px;
+    height: 63px;
+    left: 240px;
+    top: 130px;
+    
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.03em;
+}
+
+.artist
+{
+    position: absolute;
+    width: 392px;
+    height: 63px;
+    left: 364px;
+    top: 437px;
+    position: absolute;
+    width: 392px;
+    height: 63px;
+    left: 240px;
+    top: 160px;
+    
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.03em;
+}
+
+.event
+{
+    position: absolute;
+    width: 618px;
+    height: 113px;
+    left: 25px;
+    top: 280px;
+
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+}
+
+#end
+{
+    height: 750px;
+    justify-content: center;
+}
+
+#end .title, #end .textBack
+{
+    position: relative;
+    top: 40%;
+    font-weight: 700;
+    font-size: 72px;
+    line-height: 86px;
+    display: flex;
+    justify-content: center;
+}
+
+#end .textBack
+{
+    font-size: 20px;
+    top: 30%;
+    font-weight: normal;
+}
