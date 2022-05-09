@@ -5,7 +5,7 @@ import { json } from 'd3-fetch'
 
 // set the dimensions and margins of the graph
 const height = 300 //window.innerHeight*0.8;
-const width = 300 //window.innerWidth*0.6;
+const width = 320 //window.innerWidth*0.6;
 const margin = { top: 50, bottom: 50, left: 50, right: 50 }
 
 
@@ -50,12 +50,80 @@ Promise.all([
 
         svgStats.append('div')
             .attr('class', 'sticky-thing')
-            .append('p')
-            .text('0')
-        /*
-        .append('svg')
-        .attr('height', height)
-        .attr('width', width)/** */
+            .append('svg')
+            .attr('height', height)
+            .attr('width', width)
+
+        let tableControl = svgStats.select('svg')
+        
+        //danceability
+        tableControl.append('rect')
+            .attr('class', 'hover')
+            .attr('width', 10)
+            .attr('height', 300)
+            .attr('rx', 5)
+            .attr('x', 5)
+        tableControl.append('circle')
+            .attr('class', 'danceability circle')
+            .attr('r', 10)
+            .style('fill', '#13f2f2')
+            .attr('cx', 10)
+            .attr('cy', 290)
+            .append('animate')
+            .attr('attributeName', 'd')
+            .attr('dur', '5s')
+            .attr('to', '')
+
+        //energy
+        tableControl.append('rect')
+            .attr('class', 'hover')
+            .attr('width', 10)
+            .attr('height', 300)
+            .attr('rx', 5)
+            .attr('x', 105)
+        tableControl.append('circle')
+            .attr('class', 'energy circle')
+            .attr('r', 10)
+            .style('fill', '#13f2f2')
+            .attr('cx', 110)
+            .attr('cy', 290)
+
+        //bpm
+        tableControl.append('rect')
+            .attr('class', 'hover')
+            .attr('width', 10)
+            .attr('height', 300)
+            .attr('rx', 5)
+            .attr('x', 205)
+        tableControl.append('circle')
+            .attr('class', 'bpm circle')
+            .attr('r', 10)
+            .style('fill', '#13f2f2')
+            .attr('cx', 210)
+            .attr('cy', 290)
+
+        //valence
+        tableControl.append('rect')
+            .attr('class', 'hover')
+            .attr('width', 10)
+            .attr('height', 300)
+            .attr('rx', 5)
+            .attr('x', 305)
+        tableControl.append('circle')
+            .attr('class', 'valence circle')
+            .attr('r', 10)
+            .style('fill', '#13f2f2')
+            .attr('cx', 310)
+            .attr('cy', 290)
+            /*
+            .append('circle')
+            .attr('r', 10)
+            .style('fill', 'white')
+            .attr('cx', 10)
+            .attr('cy', 10)
+            .append('animation')
+            .attr('dur', '1s')
+            .attr()/** */
 
         let container = d3.select('article')
 
@@ -65,14 +133,19 @@ Promise.all([
                 .attr('class', 'step')
                 .attr('data-step', `${i + 1}`)
                 .attr('data-danceability', randomSongs[i].danceability)
+                .attr('data-energy', randomSongs[i].energy)
+                .attr('data-bpm', randomSongs[i].tempo)
+                .attr('data-valence', randomSongs[i].valence)
                 .append('g')
                 .attr('class', `step${i}`)
                 .append('p')
                 .text(`En ${data_events[i].month} ${data_events[i].year}, on écoutait`)
 
             d3.selectAll(`.step${i}`)
+                .append('div')
                 .append('img')
-                .attr('src', randomSongs[i].album.images[2].url)
+                .attr('class', 'album')
+                .attr('src', randomSongs[i].album.images[0].url)
 
             d3.selectAll(`.step${i}`)
                 .append('div')
@@ -86,7 +159,7 @@ Promise.all([
 
             d3.selectAll(`.step${i}`)
                 .append('div')
-                .attr('class', 'events')
+                .attr('class', 'event')
                 .text(data_events[i].event)
 
             /*d3.selectAll(`.step${i}`)
@@ -106,7 +179,7 @@ Promise.all([
         let steps = article.querySelectorAll(".step");
         let sticky = scrolly.querySelector(".sticky-thing");
 
-        // initialize the scrollama
+        // initialize the scrollama, oh yeah baby
         let scroller = scrollama();
 
         // scrollama event handlers
@@ -121,17 +194,20 @@ Promise.all([
             el.classList.add('is-active');
 
             // update graphic based on step
-            sticky.querySelector("p").innerText = `d: ${el.dataset.danceability}`;
-            //sticky.querySelector("rect").height = el.dataset.danceability*100;
+            //sticky.querySelector("p").innerText = `d: ${el.dataset.danceability}`;
+            sticky.querySelector(".danceability").setAttribute('cy', 300-el.dataset.danceability*300);
+            sticky.querySelector(".energy").setAttribute('cy', 300-el.dataset.energy*300);
+            sticky.querySelector(".bpm").setAttribute('cy', 300-el.dataset.bpm);
+            sticky.querySelector(".valence").setAttribute('cy', 300-el.dataset.valence*300);
         }
 
         function init()
         {
             scroller
-                .setup({
+                .setup ({
                     step: ".scrolly article .step",
-                    offset: 0.33,
-                    debug: false })
+                    offset: 0.5,
+                    debug: false})
                 .onStepEnter(handleStepEnter);
                 
             // setup resize event 
@@ -139,147 +215,129 @@ Promise.all([
         }
         init()
 
-        //console.log(scroller)
 
+        //////////TEST//////////
+
+        let svgDanceability = d3.select('.test').append('g').attr('class', 'danceability');
+        let svgEnergy = d3.select('.test').append('g').attr('class', 'energy');
+        let svgTempo = d3.select('.test').append('g').attr('class', 'tempo');
+        let svgLoudness = d3.select('.test').append('g').attr('class', 'valence');
+
+
+
+        svgDanceability.append('p')
+            .text('Danceability');
+
+        let pWidth = document.querySelector('.danceability p').offsetWidth;
+        
+        svgDanceability.append('svg')
+            .attr('width', pWidth)
+            .attr('height', 20)
+            .append('rect')
+            .attr('height', '20px')
+            .attr('ry', '10')
+            .attr('width', pWidth*0.8)
+            .attr('x', 0)
+
+        svgDanceability.select('svg')
+            .append('circle')
+            .attr('r', 10)
+            .attr('cy', 10)
+            .attr('cx', 10)
+            .style('fill', 'red')
 
         
+        svgEnergy.append('p')
+            .text('Energy')
+
+        svgEnergy.append('svg')
+            .attr('width', pWidth)
+            .attr('height', 20)
+            .append('rect')
+            .attr('height', '20px')
+            .attr('ry', '10')
+            .attr('width', pWidth*0.8)
+            .attr('x', pWidth*0.1)
+
+        
+        svgTempo.append('p')
+            .text('BPM');
+
+        svgTempo.append('svg')
+            .attr('width', pWidth)
+            .attr('height', 20)
+            .append('rect')
+            .attr('height', '20px')
+            .attr('ry', '10')
+            .attr('width', pWidth*0.8)
+            .attr('x', pWidth*0.1)
 
 
+        svgLoudness.append('p')
+            .text('valence');
 
-
-
+        svgLoudness.append('svg')
+            .attr('width', pWidth)
+            .attr('height', 20)
+            .append('rect')
+            .attr('height', '20px')
+            .attr('ry', '10')
+            .attr('width', pWidth*0.8)
+            .attr('x', pWidth*0.1)
         /*
-                container.selectAll('text')
-                    .data(randomSongs)
-                    .enter()
-                    //créer un bloque blanc par musique qui englobe tout
-                    .append('div')
-                    .attr('class', 'item')
-                    .append('g')
-                    .attr('class', 'group')
-                    //créer une div qui contient le nom de la chanson
-                    .append('div')
-                    .attr('class', 'songName')
-                    .text(d=> d.name)
-                    /*.append('div')
-                    .attr('class', 'artist')
-                    .text(d=> d.artists.map(a => ` ${a.name}`))
-                    .append('img')
-                    .attr('src', d=> d.album.images[2].url)
-                    
-                    .append("audio")
-                    .attr('controls', 'controls')
-                    .append('source')
-                    .attr('src', d=> d.preview_url)
-                    .attr('type', 'audio/mpeg')/** */
+        let musique = d3.select('.test')
+            .append('svg')
+            .attr('height', height)
+            .attr('width', width)
+            .attr('class', 'testSvg');
+        
+        musique.append('rect')
+            .attr('width', '250px')
+            .attr('height', '10px')
+            .attr('y', 10)
+            .attr('x', 25)
+            .style('fill', 'black')
+            .attr('ry', '5')
 
-        /*
-    let containerArtistes = d3.select('.group')
-        //créer une div qui contient l'(es) artiste(s)
-    containerArtistes.selectAll('text')
-        .data(randomSongs)
-        .enter()
-        .append('div')
-        .attr('class', 'artist')
-        .text(d=> d.artists.map(a => ` ${a.name}`))
+        musique.append('rect')
+            .attr('class', 'bar')
+            .attr('width', '100px')
+            .attr('height', 10)
+            .attr('y', 30)
+
+        musique.append('circle')
+            .attr('r', '5px')
+            .attr('cy', 15)
+            .attr('cx', 20+25)
+            .style('fill', 'red')
+        
+        
+        //axe X
+        /*const x = d3.scaleBand()
+            .domain(randomSongs.map(n => n.name))
+            .range([0, width])
+            .padding(0.2);
+        
+        musique.append("g")
+            .attr("transform", `translate(0, ${height})`)
+            .call(d3.axisBottom(x))
+              
     
-    
-    //ajouter une image
-    /*d3.selectAll('.item')
-        .append('img')
-        .attr('class', 'albumCover')
-        .attr('src', 'https://robohash.org/image')
-        .attr('alt', 'album cover')
-        
-        
-        //créer le tableau avec les stats de la musique en question
-        /*.append('div')
-        .attr('class', 'svg')
-        .append('svg')
-        .attr('class', 'stats')
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-        //créer rect
-        /*.append('rect')
-        .attr("x", function(d) { return x(d.name); })
-        .attr("y", function(d) { return y(d.danceability); })
-        .attr("height", function(d) { return height - y(d.danceability); })
-        .attr("fill", "#69b3a2")/** */
+        //axe Y
+        const y = d3.scaleLinear()
+            .domain([0, 1])
+            .range([ height, 0]);
 
 
-        /*
-                titre.selectAll('text')
-                    .data(data_2017, d => d)
-                    .join(
-                    enter => enter
-                        .append('text')
-                        .attr('fill', 'green')
-                        .attr('x', (d, i) => i*50)
-                        .attr('y', -30)
-                        .text(d => `${d.name}\r`)
-                        .transition(t)
-                        .attr('y', 0),
-                    update => update
-                        .attr('y', 0)
-                        .transition(t)
-                        .attr('x', (d, i) => i * 15),
-                    exit => exit
-                        .attr('fill', 'red')
-                        .transition(t)
-                        .attr("x", (d, i) => i * 15)
-                    )
-                
-        
-                /*
-                // Parse the Data
-        
-                //axe X
-                const x = d3.scaleBand()
-                    .domain(data_2017.map(m => m.name))
-                    .range([0, width])
-                    .padding(0.2);
-        
-                svgGraphe.append("g")
-                    .attr("transform", `translate(0, ${height})`)
-                    .call(d3.axisBottom(x))
-                  
-        
-        
-                //axe Y
-                const y = d3.scaleLinear()
-                    .domain([0, 1])
-                    .range([ height, 0]);
-        
-        
-                svgGraphe.append("g")
-                    .attr("transform", `translate(${margin.left}, 0)`)
-                    .call(d3.axisLeft(y));
-        
-        
-                //bars
-                svgGraphe.selectAll("rect")
-                    .data(data_2017)
-                    .enter()
-                    .append("rect")
-                    .attr("x", function(d) { return x(d.name); })
-                    .attr("y", function(d) { return y(d.danceability); })
-                    .attr("width", x.bandwidth())
-                    .attr("height", function(d) { return height - y(d.danceability); })
-                    .attr("fill", "#69b3a2")
-        
-        
-        
-                
-                /*data_2017.forEach(e => {
-                    console.log(`${e.name} a comme tempo: ${e.tempo}`)
-                }); /** */
-
-        /*
-        const musiques = data_2017.reduce((m, music) =>
-        {
-            const dance = m[music.danceability]
-            return {}
-        });*/
+        musique.selectAll("rect")
+            .data(randomSongs)
+            .enter()
+            .append("rect")
+            .attr("x", function(d) { return x(d.name); })
+            .attr("y", function(d) { return y(d.danceability); })
+            .attr("width", x.bandwidth())
+            .attr("height", function(d) { return height - y(d.danceability); })
+            .attr("fill", "#69b3a2")/** */
     })
     .catch(function (error) {
         console.log(error);
