@@ -6,7 +6,20 @@ import { json } from 'd3-fetch'
 // set the dimensions and margins of the graph
 const height = 300 //window.innerHeight*0.8;
 const width = 320 //window.innerWidth*0.6;
-const margin = { top: 50, bottom: 50, left: 50, right: 50 }
+
+let donneesFict = [];
+let ligne = [];
+
+for(let i = 0; i < 10; i++)
+{
+    for(let j = 0; j < 4; j++)
+    {
+        ligne[j] = Math.floor((Math.random() * 100) + 1)
+    }
+    donneesFict.push(ligne);
+}
+
+
 
 
 Promise.all([
@@ -45,34 +58,69 @@ Promise.all([
         pushSong(data_2019);
         pushSong(data_2020);
         pushSong(data_2021);
+        
+        
+        ////////////////////
 
-        let svgStats = d3.select('.scrolly')
+        let sizeX = window.innerWidth;
+        let sizeY = window.innerHeight;
+
+        console.log(sizeX)
+        console.log(sizeY)
+
+        var xMousePos = 0;
+        var yMousePos = 0;
+        document.onmousemove = function(e)
+        {
+            xMousePos = (e.pageX/sizeX)*100 //+ window.pageXOffset;
+            yMousePos = (e.pageY/sizeY)*100 //+ window.pageYOffset;
+
+            console.log("x: " + xMousePos)
+            console.log("y: " + yMousePos)
+        };
+
+
+
+
+
+        let svgStats = d3.select('section.scrolly')
 
         svgStats.append('div')
             .attr('class', 'sticky-thing')
             .append('svg')
             .attr('height', height)
             .attr('width', width)
+        
+        let tooltip = svgStats.select('.sticky-thing')
+            .append('div')
+            .attr('class', 'testDance')
+            .style('position', 'absolute')
+            .style('top', '30px')
+            .style('visibility', 'hidden')
+            .text('dance');
+
 
         let tableControl = svgStats.select('svg')
         
         //danceability
         tableControl.append('rect')
-            .attr('class', 'hover')
+            .attr('class', 'hover toolDanceability')
             .attr('width', 10)
             .attr('height', 300)
             .attr('rx', 5)
             .attr('x', 5)
         tableControl.append('circle')
-            .attr('class', 'danceability circle')
+            .attr('class', 'circle danceability')
             .attr('r', 10)
             .style('fill', '#13f2f2')
             .attr('cx', 10)
             .attr('cy', 290)
-            .append('animate')
-            .attr('attributeName', 'd')
-            .attr('dur', '5s')
-            .attr('to', '')
+            //hover
+        d3.select('.toolDanceability')
+            .on('mouseover', function(){return tooltip.style('visibility', 'visible');})
+            //.on("mousemove", function(){return tooltip.style("top", 200 + "px").style("left", 100 + 'px');})
+            .on("mouseout", function(){return tooltip.style("visibility", "hidden");});
+
 
         //energy
         tableControl.append('rect')
@@ -125,7 +173,7 @@ Promise.all([
             .attr('dur', '1s')
             .attr()/** */
 
-        let container = d3.select('article')
+        let container = d3.select('section.scrolly article')
 
         for (let i = 0; i < randomSongs.length; i++) 
         {
@@ -162,20 +210,17 @@ Promise.all([
                 .attr('class', 'event')
                 .text(data_events[i].event)
 
-            /*d3.selectAll(`.step${i}`)
-                .append('svg')
-                .attr('height', height)
-                .attr('width', width)
-                .append('rect')
-                .attr('height', randomSongs[i].danceability*100)
-                .attr('width', 10)
-                .attr('rx', 10)/** */
+            d3.selectAll(`.step${i}`)
+                .append('audio')
+                .attr('src', randomSongs[i].preview_url)
+                .attr('type', 'audio/mpeg')
+                /** */
         }
 
         //sélectionner les différentes parties du scroll
         let main = document.querySelector("main");
-        let scrolly = main.querySelector(".scrolly");
-        let article = scrolly.querySelector("article");
+        let scrolly = main.querySelector("section.scrolly");
+        let article = scrolly.querySelector("section.scrolly article");
         let steps = article.querySelectorAll(".step");
         let sticky = scrolly.querySelector(".sticky-thing");
 
@@ -205,7 +250,7 @@ Promise.all([
         {
             scroller
                 .setup ({
-                    step: ".scrolly article .step",
+                    step: "section.scrolly article .step",
                     offset: 0.5,
                     debug: false})
                 .onStepEnter(handleStepEnter);
@@ -215,129 +260,6 @@ Promise.all([
         }
         init()
 
-
-        //////////TEST//////////
-
-        let svgDanceability = d3.select('.test').append('g').attr('class', 'danceability');
-        let svgEnergy = d3.select('.test').append('g').attr('class', 'energy');
-        let svgTempo = d3.select('.test').append('g').attr('class', 'tempo');
-        let svgLoudness = d3.select('.test').append('g').attr('class', 'valence');
-
-
-
-        svgDanceability.append('p')
-            .text('Danceability');
-
-        let pWidth = document.querySelector('.danceability p').offsetWidth;
-        
-        svgDanceability.append('svg')
-            .attr('width', pWidth)
-            .attr('height', 20)
-            .append('rect')
-            .attr('height', '20px')
-            .attr('ry', '10')
-            .attr('width', pWidth*0.8)
-            .attr('x', 0)
-
-        svgDanceability.select('svg')
-            .append('circle')
-            .attr('r', 10)
-            .attr('cy', 10)
-            .attr('cx', 10)
-            .style('fill', 'red')
-
-        
-        svgEnergy.append('p')
-            .text('Energy')
-
-        svgEnergy.append('svg')
-            .attr('width', pWidth)
-            .attr('height', 20)
-            .append('rect')
-            .attr('height', '20px')
-            .attr('ry', '10')
-            .attr('width', pWidth*0.8)
-            .attr('x', pWidth*0.1)
-
-        
-        svgTempo.append('p')
-            .text('BPM');
-
-        svgTempo.append('svg')
-            .attr('width', pWidth)
-            .attr('height', 20)
-            .append('rect')
-            .attr('height', '20px')
-            .attr('ry', '10')
-            .attr('width', pWidth*0.8)
-            .attr('x', pWidth*0.1)
-
-
-        svgLoudness.append('p')
-            .text('valence');
-
-        svgLoudness.append('svg')
-            .attr('width', pWidth)
-            .attr('height', 20)
-            .append('rect')
-            .attr('height', '20px')
-            .attr('ry', '10')
-            .attr('width', pWidth*0.8)
-            .attr('x', pWidth*0.1)
-        /*
-        let musique = d3.select('.test')
-            .append('svg')
-            .attr('height', height)
-            .attr('width', width)
-            .attr('class', 'testSvg');
-        
-        musique.append('rect')
-            .attr('width', '250px')
-            .attr('height', '10px')
-            .attr('y', 10)
-            .attr('x', 25)
-            .style('fill', 'black')
-            .attr('ry', '5')
-
-        musique.append('rect')
-            .attr('class', 'bar')
-            .attr('width', '100px')
-            .attr('height', 10)
-            .attr('y', 30)
-
-        musique.append('circle')
-            .attr('r', '5px')
-            .attr('cy', 15)
-            .attr('cx', 20+25)
-            .style('fill', 'red')
-        
-        
-        //axe X
-        /*const x = d3.scaleBand()
-            .domain(randomSongs.map(n => n.name))
-            .range([0, width])
-            .padding(0.2);
-        
-        musique.append("g")
-            .attr("transform", `translate(0, ${height})`)
-            .call(d3.axisBottom(x))
-              
-    
-        //axe Y
-        const y = d3.scaleLinear()
-            .domain([0, 1])
-            .range([ height, 0]);
-
-
-        musique.selectAll("rect")
-            .data(randomSongs)
-            .enter()
-            .append("rect")
-            .attr("x", function(d) { return x(d.name); })
-            .attr("y", function(d) { return y(d.danceability); })
-            .attr("width", x.bandwidth())
-            .attr("height", function(d) { return height - y(d.danceability); })
-            .attr("fill", "#69b3a2")/** */
     })
     .catch(function (error) {
         console.log(error);
