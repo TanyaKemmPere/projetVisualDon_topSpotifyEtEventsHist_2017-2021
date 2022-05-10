@@ -1,0 +1,14 @@
+.animation
+{
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+}
+
+.timetravel
+{
+    height: 300px;
+    position: absolute;
+    top: 25%;
+    left: 0%
+}

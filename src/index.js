@@ -3,6 +3,8 @@ import css from "./css/main.css";
 import * as d3 from 'd3';
 import { json } from 'd3-fetch'
 
+import * as animation from './/objets/animation.js'
+
 // set the dimensions and margins of the graph
 const height = 300 //window.innerHeight*0.8;
 const width = 320 //window.innerWidth*0.6;
