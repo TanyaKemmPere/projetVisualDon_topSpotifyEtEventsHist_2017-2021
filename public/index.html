@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spotipast</title>
-    
+    <link rel="icon" href="/images/time-travel.svg" />
     <link rel="stylesheet" type="text/css" href="../src/css/main.css">
 </head>
 
@@ -16,22 +16,52 @@
         <!----INTRO---->
         <section id="intro">
             <div class="head">
-            <h1 class="title">Qu'est-ce qu'on écoutait quand...</h1>
-            <div class="intro">
-                Remémorons les événements de ces cinq dernières années en musique
-            </div>
-            <p class="hover">Hover Me! <span class="tooltip">Hello, World!</span> </p>
+                <h1 class="title">Qu'est-ce qu'on écoutait quand...</h1>
+                <div class="intro">
+                    Remémorons les événements de ces cinq dernières années en musique
+                </div>
+                <p class="hover">Hover Me! <span class="tooltip">Hello, World!</span> </p>
             </div>
 
             <div class="timetravel">
                 <img src="/images/time-travel.svg" alt="time-travel" height="400px">
             </div>
 
-            <div class="test"></div>
+            <div class="explication">
+
+                <div class="intro">
+                    Comme pour un album de famille, ici vous vous
+                    baladerez entre les différents mois de ces 5
+                    dernières années pour vous rappeler ce que nous
+                    avons vécu...
+                    Bonne lecture!
+                </div>
+
+                <div class="explicationGraphe">
+                    <p>
+                        Danceability: The higher the value, the easier it is to dance to this song.
+                    </p>
+                    <p>
+                        Energy: The energy of a song - the higher the value, the more energtic.
+                    </p>
+                    <p>
+                        BPM: The tempo of the song.
+                    </p>
+                    <p>
+                        Valence: The higher the value, the more positive mood for the song.
+                    </p>
+                </div>
+                <div class="graphQuiBouge"></div>
++
+            </div>
+
+
+
         </section>
 
 
         <!----CORPS---->
+
 
         <section id="spotifyAndEvents" class="scrolly">
 
@@ -52,8 +82,11 @@
         </section>
 
     </main>
+    <!--Pour faire le scrolling-->
     <script src="https://unpkg.com/intersection-observer@0.5.1/intersection-observer.js"></script>
     <script src="https://unpkg.com/scrollama"></script>
+
+    
 </body>
 
 </html>
