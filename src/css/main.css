@@ -196,6 +196,15 @@ body
     align-items: center;
 }
 
+.step audio
+{
+    position: absolute;
+    width: 250px;
+    height: 30px;
+    left: 240px;
+    top: 240px;
+}
+
 .box
 {
     color: #fff;
