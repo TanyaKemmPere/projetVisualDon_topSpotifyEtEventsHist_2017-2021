@@ -325,6 +325,8 @@ Promise.all([
 
             d3.selectAll(`.step${i}`)
                 .append('audio')
+                .attr('controls', 'controls')
+                .append('source')
                 .attr('src', randomSongs[i].preview_url)
                 .attr('type', 'audio/mpeg')
             /** */
@@ -338,6 +340,7 @@ Promise.all([
         let sticky = scrolly.querySelector(".sticky-thing");
 
 /////////////////////////////////////////////////
+        //c'est la que la magie s'oppère
         // initialize the scrollama, oh yeah baby
         let scroller = scrollama();
 
