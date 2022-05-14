@@ -7,14 +7,16 @@ const flightPath =
     curviness: 1.25,
     autoRotate: true,
     values: [
-        {x: 100, y: -20},
-        {x: 300, y: 10},
-        {x: 500, y: 100},
-        {x: 750, y: -100},
-        {x: 350, y: -50},
-        {x: 600, y: 100},
-        {x: 800, y: 0},
-        {x: window.innerWidth, y: -250},
+        {x: 100, y: 0},
+        {x: 150, y: -20},
+        {x: 400, y: 10},
+        {x: 650, y: 100},
+        {x: 850, y: -100},
+        {x: 600, y: -50},
+        {x: 900, y: -10},
+        {x: 1150, y: 100},
+        {x: 1550, y: 200},
+        {x: 2050, y: 300},
     ]
 };
 
@@ -32,8 +34,8 @@ const controller = new ScrollMagic.Controller();
 
 const scene = new ScrollMagic.Scene({
     triggerElement: '.animation',
-    duration: 1000,
-    triggerHook: 0.5
+    duration: 2000,
+    triggerHook: 1
 })
 .setTween(tween)
 .addTo(controller);
