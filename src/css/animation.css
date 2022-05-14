@@ -3,6 +3,7 @@
     height: 100vh;
     position: relative;
     overflow: hidden;
+    border: none;
 }
 
 .timetravel
@@ -10,5 +11,5 @@
     height: 300px;
     position: absolute;
     top: 25%;
-    left: 0%
+    left: -70px;
 }
